@@ -1,0 +1,51 @@
+---
+title: "AdventureWorks"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Cargar librerías
+
+```{r}
+library(funModeling)
+library(tidyverse)
+library(corrplot)
+library(ggplot2)
+library(GGally)
+```
+
+
+
+## Lectura de datos
+
+```{r}
+customers <- read.csv("../AdventureWorks/datos/AWCustomers.csv", header = TRUE, sep = ",")
+df_status(customers)
+```
+
+## Estructura de los datos
+
+```{r}
+str(customers)
+```
+
+
+## Valores perdidos
+
+```{r missing values }
+
+# Check missing valueslapp
+sapply(customers, function(x) sum(is.na(x)))
+```
+
+## Análisis de correlación
+
+```{r pressure, echo=FALSE}
+# Correlation matrix
+datos <- customers %>% select_if(is.numeric)
+cor(datos[, 2:6])
+corrplot(cor(datos[, 2:6]), type = "upper")
+```
